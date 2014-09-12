@@ -1,19 +1,18 @@
 COMPILER=g++
 RUNSTRING=./${TARGET}
-OBJECTS=main.o
+OBJECTS=main.o draw.o shaderprogram.o
 LIBS= -lpthread -lsndfile `sdl2-config --libs` -lGL
 FLAGS=-g -std=c++11 -Ofast `sdl2-config --cflags`
 
 TARGET=project
 
-
 all: .depend ${TARGET}
 
 #Calculating dependincies
 .depend: $(wildcard ./*.cpp ./*.h) Makefile
-	$(CXX) $(CFLAGS) -MM *.cpp > ./.dependtmp
-	cat ./.dependtmp | sed 's/h$$/h \n\t \$(CXX) -c $(FLAGS) $$< -o $$@/' > ./.depend
-	rm ./.dependtmp
+#	$(CXX) $(CFLAGS) -MM *.cpp > ./.dependtmp
+#	cat ./.dependtmp | sed 's/h$$/h \n\t \$(CXX) -c $(FLAGS) $$< -o $$@/' > ./.depend
+#	rm ./.dependtmp
 
 ${TARGET}: ${OBJECTS} #cleancpp
 	${COMPILER} ${FLAGS} -o ${TARGET} ${OBJECTS} ${LIBS}
