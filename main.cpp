@@ -9,6 +9,8 @@
 #include <SDL2/SDL.h>
 #define PROGRAM_NAME "Tutorial1"
 
+#include "matrix.h"
+
 // A simple function that prints a message, the error code returned by SDL,
 // and quits the application
 void sdldie(const char *msg)
@@ -35,7 +37,9 @@ void checkSDLError(int line = -1)
 
 //Rendering function
 void render(){
-	drawSquare(vec(1, 1, 1), 0, 100,100, DRAW_STYLE_FILLED);
+	static float x = 0;
+	drawSquare(Vec(.1 + x, 50, 1), 20 + x * 2, 100,100, DRAW_STYLE_FILLED);
+	x += 20;
 }
 
 

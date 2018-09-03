@@ -19,3 +19,14 @@
 *.exe
 *.out
 *.app
+
+
+.cproject
+.project
+.settings/
+project
+sdl2-makefile-project.config
+sdl2-makefile-project.creator
+sdl2-makefile-project.creator.user
+sdl2-makefile-project.files
+sdl2-makefile-project.includes

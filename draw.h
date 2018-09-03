@@ -27,7 +27,7 @@ void QuitDrawModule();
 void modelTransform(unsigned int pointer, vec p, double a, double scaleX, double scaleY);
 void resetTransform(unsigned int poniter);
 void setCam(vec p, double a);
-void drawSquare(vec p, double a, double scaleX, double scaleY, DrawStyle);
+void drawSquare(class Vec p, double a, double scaleX, double scaleY, DrawStyle);
 void setDimensions(double width, double height);
 
 #endif /* DRAW_H_ */
