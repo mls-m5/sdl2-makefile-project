@@ -26,7 +26,7 @@
 class ShaderProgram {
 public:
 	ShaderProgram(ShaderProgram &s){
-		this->gProgram = s.gProgram;
+		this->_program = s._program;
 	}
 	ShaderProgram();
 	ShaderProgram(std::string vertexCode, std::string fragmentCode);
@@ -35,15 +35,21 @@ public:
 	void loadFragmentShader(char *code);
 	void linkProgram();
 
-	void useProgram();
 
-	GLuint getProgram() { return gProgram; };
+	inline void useProgram() __attribute__ ((deprecated)) {
+		use();
+	}
+
+	void use();
+	void unuse();
+
+	GLuint getProgram() { return _program; };
 	GLint getUniform( char const* name );
 	GLint getAttribute( char const* name );
 	virtual ~ShaderProgram();
 
 private:
-	GLuint gProgram;
+	GLuint _program;
 };
 
 
@@ -64,7 +70,8 @@ static void printGLString(const char *name, GLenum s) {
     debug_print("GL %s = %s\n", name, v);
 }
 
-static void checkGlError(const char* op, bool throwError = false) {
+static int checkGlError(const char* op, bool throwError = false) {
+	bool ret = false;
     for (GLint error = glGetError(); error; error
             = glGetError()) {
     	const char * c;
@@ -97,14 +104,19 @@ static void checkGlError(const char* op, bool throwError = false) {
     		c = "GL_TABLE_TOO_LARGE1";
     		break;
     	}
-        debug_print("after %s() glError (0x%x) %s \n\n", op, error, c);
+        debug_print("after %s()\n glError (0x%x) %s \n\n", op, error, c);
         printGLString(op, error);
         if (throwError) {
         	throw c;
         }
     }
+    return ret;
 }
 
-#define glCall(call) call; checkGlError(#call, true)
+#ifdef NDEBUG
+#define glCall(call) call;
+#else
+#define glCall(call) call; if(checkGlError(#call, true)) {std::cout << "at" << __FILE__ << ":" << __LINE__ << std::endl;};
+#endif
 
 #endif /* SHADERPROGRAM_H_ */

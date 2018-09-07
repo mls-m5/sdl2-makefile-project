@@ -77,17 +77,17 @@ GLuint createProgram(std::string pVertexSource, std::string pFragmentSource) {
 }
 
 ShaderProgram::ShaderProgram():
-		gProgram(0){
+		_program(0){
 
 }
 
 void ShaderProgram::initProgram(std::string vertexCode, std::string fragmentCode) {
-	gProgram = createProgram(vertexCode, fragmentCode);
+	_program = createProgram(vertexCode, fragmentCode);
 }
 
 GLint ShaderProgram::getUniform(char const* name) {
 	GLint ret;
-    ret = glGetUniformLocation(gProgram, name);
+    ret = glGetUniformLocation(_program, name);
 
     checkGlError(name);
     return ret;
@@ -95,7 +95,7 @@ GLint ShaderProgram::getUniform(char const* name) {
 
 GLint ShaderProgram::getAttribute(char const* name) {
 	GLint ret;
-	ret = glGetAttribLocation(gProgram, name);
+	ret = glGetAttribLocation(_program, name);
 
 	checkGlError(name);
 
@@ -107,8 +107,8 @@ ShaderProgram::ShaderProgram(std::string vertexCode, std::string fragmentCode) {
 }
 
 ShaderProgram::~ShaderProgram() {
-	if (gProgram){
-		glDeleteProgram(gProgram);
+	if (_program){
+		glDeleteProgram(_program);
 	}
 }
 
@@ -130,6 +130,14 @@ void StandardShaderProgram::disable() {
 	}
 }
 
-void ShaderProgram::useProgram() {
-	glUseProgram(gProgram);
+void ShaderProgram::use() {
+	if (_program) {
+		glUseProgram(_program);
+	}
 }
+
+void ShaderProgram::unuse() {
+	glUseProgram(0);
+}
+
+
