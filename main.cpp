@@ -7,7 +7,7 @@
 #include "draw.h"
 
 #include <SDL2/SDL.h>
-#define PROGRAM_NAME "Tutorial1"
+
 
 #include "matrix.h"
 
@@ -62,14 +62,16 @@ int main(int argc, char *argv[])
 //    You may need to change this to 16 or 32 for your system
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
     // Create our window centered at 512x512 resolution
-    mainwindow = SDL_CreateWindow(PROGRAM_NAME, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+    mainwindow = SDL_CreateWindow("sdl-window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
         512, 512, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
     if (!mainwindow) /* Die if creation failed */
         sdldie("Unable to create window");
 
     checkSDLError(__LINE__);
+
 
     // Create our opengl context and attach it to our window
     maincontext = SDL_GL_CreateContext(mainwindow);
